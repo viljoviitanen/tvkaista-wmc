@@ -1,0 +1,127 @@
+<Mcml xmlns="http://schemas.microsoft.com/2006/mcml"
+      xmlns:cor="assembly://MsCorLib/System"
+      xmlns:me="Me">
+
+  <Animation Name="ScaleAnim" Type="Scale">
+    <Keyframes>
+      <ScaleKeyframe Time="0" RelativeTo="Current" Value="1,1,1"/>
+      <ScaleKeyframe Time="0.1" RelativeTo="Final" Value="1,1,1"/>
+    </Keyframes>
+  </Animation>
+  <UI Name="SimpleButton">
+    <Properties>
+      <cor:String Name="Label" cor:String="$Required"/>
+      <ICommand Name="Command" ICommand="$Required" />
+    </Properties>
+    <Locals>
+      <ClickHandler Name="Clicker" />
+    </Locals>
+    <Rules>
+      <Binding Source="[Command]" Target="[Clicker.Command]" />
+      <Default Target="[Input.KeyInteractive]" Value="True"/>
+      <Default Target="[Input.KeyFocusOnMouseEnter]" Value="true"/>
+      <Condition Source="[Input.KeyFocus]" SourceValue="true">
+        <Actions>
+          <Set Target="[ButtonPanel.Scale]" Value="1.1,1.1,1.1"/>
+          <Set Target="[ButtonPanel.Alpha]" Value="1"/>
+        </Actions>
+      </Condition>
+      <Condition Source="[Input.KeyFocus]" SourceValue="false">
+        <Actions>
+          <Set Target="[ButtonPanel.Scale]" Value="1,1,1"/>
+          <Set Target="[ButtonPanel.Alpha]" Value="0.50"/>
+        </Actions>
+      </Condition>
+    </Rules>
+    <Content>
+      <Panel CenterPointPercent="0,0.5,0.5" Name="ButtonPanel">
+        <Animations>
+          <Animation Animation="animation://me:ScaleAnim"/>
+        </Animations>
+        <Children>
+          <Text Name="MyLabel" Content="[Label]" Alpha="0.75" Font="Arial,25,Bold" Color="White"/>
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+
+ <UI Name="SimpleButton2">
+    <Properties>
+      <cor:String Name="Label" cor:String="$Required"/>
+      <cor:String Name="Path" cor:String="$Required" />
+    </Properties>
+    <Locals>
+      <ClickHandler Name="Clicker" />
+    </Locals>
+    <Rules>
+      <Default Target="[Input.KeyInteractive]" Value="True"/>
+      <Default Target="[Input.KeyFocusOnMouseEnter]" Value="true"/>
+      <Condition Source="[Input.KeyFocus]" SourceValue="true">
+        <Actions>
+          <Set Target="[ButtonPanel.Scale]" Value="1.1,1.1,1.1"/>
+          <Set Target="[ButtonPanel.Alpha]" Value="1"/>
+        </Actions>
+      </Condition>
+      <Condition Source="[Input.KeyFocus]" SourceValue="false">
+        <Actions>
+          <Set Target="[ButtonPanel.Scale]" Value="1,1,1"/>
+          <Set Target="[ButtonPanel.Alpha]" Value="0.50"/>
+        </Actions>
+      </Condition>
+      <Condition Source="[Clicker.Clicking]" SourceValue="true">
+        <Actions>
+          <Navigate Source="[Path]" />
+        </Actions>
+      </Condition>
+    </Rules>
+    <Content>
+      <Panel CenterPointPercent="0,0.5,0.5" Name="ButtonPanel">
+        <Animations>
+          <Animation Animation="animation://me:ScaleAnim"/>
+        </Animations>
+        <Children>
+          <Text Name="MyLabel" Content="[Label]" Alpha="0.75" Font="Arial,25,Bold" Color="White"/>
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+  <UI Name="Playing">
+    <Rules>
+      <Default Target="[Input.KeyInteractive]" Value="true" />
+    </Rules>
+    <Content>
+          <NowPlaying ShowFullMetadata="Never" SnapToDefaultPosition="true" />
+    </Content>
+  </UI>
+
+  <UI Name="PlayingButton">
+    <Properties>
+      <ICommand Name="Command" ICommand="$Required" />
+    </Properties>
+    <Locals>
+      <ClickHandler Name="Clicker" />
+    </Locals>
+    <Rules>
+      <Binding Source="[Command]" Target="[Clicker.Command]" />
+      <Default Target="[Input.KeyInteractive]" Value="True"/>
+      <Default Target="[Input.KeyFocusOnMouseEnter]" Value="true"/>
+      <Condition Source="[Input.KeyFocus]" SourceValue="true">
+        <Actions>
+          <Set Target="[ButtonPanel.Alpha]" Value="0.8"/>
+        </Actions>
+      </Condition>
+      <Condition Source="[Input.KeyFocus]" SourceValue="false">
+        <Actions>
+          <Set Target="[ButtonPanel.Alpha]" Value="0.4"/>
+        </Actions>
+      </Condition>
+    </Rules>
+    <Content>
+      <Panel CenterPointPercent="0,0.5,0.5" Name="ButtonPanel">
+        <Children>
+          <Text Name="MyLabel" Content="Nyt toistetaan" Alpha="0.4" Font="Arial,14,Bold" Color="White"/>
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+</Mcml>
